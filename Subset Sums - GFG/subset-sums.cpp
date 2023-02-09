@@ -30,8 +30,7 @@ public:
         //(ind,intital_sum,array,length,ds)
         sub_helper(0,0,arr,N,sum);
         
-        
-        sort(sum.begin(),sum.end());
+     
         return sum;
         
         
