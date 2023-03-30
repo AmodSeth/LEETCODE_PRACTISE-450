@@ -6,37 +6,33 @@ using namespace std;
 class Solution
 {
 	public:
-	void topodfs(int node,int vis[],vector<int> adj[],stack<int> &st){
-	    //mark as visited
-	    vis[node] = 1;
-	    
-	    for(auto it:adj[node]){
-	        if(!vis[it]){
-	            topodfs(it,vis,adj,st);
-	        }
-	    }
-	    
-	    //push into stack
-	    st.push(node);
-	}
-	
-	
 	//Function to return list containing vertices in Topological order. 
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
-	    int vis[V] = {0};
-	    stack<int> st;
+	    int indegree[V]={0};
+	    //given th
 	    for(int i =0;i<V;i++){
-	        if(!vis[i]){
-	            //call the topo dfs
-	            topodfs(i,vis,adj,st);
+	        for(auto it:adj[i]){
+	            indegree[it]++;
 	        }
 	    }
 	    
 	    vector<int> ans;
-	    while(!st.empty()){
-	        ans.push_back(st.top());
-	        st.pop();
+	    queue<int> q;
+	    for(int i = 0;i<V;i++) {
+	        if(indegree[i] == 0){
+	            q.push(i);
+	        }
+	    }
+	    while(!q.empty()){
+	        int front = q.front();
+	        q.pop();
+	        ans.push_back(front);
+	        
+	        for(auto it:adj[front]){
+	            indegree[it]--;
+	            if(indegree[it] == 0) q.push(it);
+	        }
 	    }
 	    
 	    return ans;
